@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- HEADER -->
+<div class="header">
+    <h2>📒 Customers</h2>
+</div>
+
+<!-- SUMMARY -->
+<div class="card summary-card">
+    <h3>Total Outstanding</h3>
+
+    {% if total_due > 0 %}
+        <p class="due">₹{{ total_due }} Due</p>
+    {% elif total_due < 0 %}
+        <p class="advance">₹{{ total_due|cut:"-" }} Advance</p>
+    {% else %}
+        <p class="clear">All Settled</p>
+    {% endif %}
+</div>
+
+<!-- SEARCH -->
+<div class="card">
+    <form method="GET" id="searchForm">
+        <input 
+            type="text" 
+            name="search" 
+            placeholder="🔍 Search customer..."
+            value="{{ search_query|default:'' }}"
+            id="searchInput"
+        >
+    </form>
+</div>
+
+<!-- ADD CUSTOMER -->
+<div class="card">
+    <h3>Add Customer</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Add Customer</button>
+    </form>
+</div>
+
+<!-- CUSTOMER LIST -->
+<div class="card">
+    <h3>Customer List</h3>
+
+    {% for item in customer_data %}
+    <div class="customer-row">
+
+        <div class="customer-left">
+            <a href="{% url 'customer_detail' item.customer.id %}">
+                {{ item.customer.name }}
+            </a>
+
+            {% if item.customer.phone %}
+                <p class="phone">{{ item.customer.phone }}</p>
+            {% endif %}
+        </div>
+
+        <div class="customer-right">
+            {% if item.balance > 0 %}
+                <span class="due">₹{{ item.balance }}</span>
+            {% elif item.balance < 0 %}
+                <span class="advance">₹{{ item.balance|cut:"-" }}</span>
+            {% else %}
+                <span class="clear">Cleared</span>
+            {% endif %}
+        </div>
+
+    </div>
+    {% empty %}
+    <p class="empty">No customers yet</p>
+    {% endfor %}
+
+</div>
+
+<!-- SEARCH AUTO SUBMIT (SMOOTH LIKE GOOGLE) -->
+<script>
+let timeout = null;
+
+document.getElementById("searchInput").addEventListener("keyup", function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+        document.getElementById("searchForm").submit();
+    }, 400); // debounce
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="header">
+    <h2>📊 Dashboard</h2>
+</div>
+
+<!-- SUMMARY CARDS -->
+<div class="grid">
+
+    <div class="card highlight">
+        <h3>Today Cash</h3>
+        <p class="big">₹{{ instant_today }}</p>
+    </div>
+
+    <div class="card highlight">
+        <h3>Today Khata Received</h3>
+        <p class="big">₹{{ khata_today }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Total Credit Given</h3>
+        <p class="big">₹{{ total_credit }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Outstanding</h3>
+
+        {% if total_outstanding > 0 %}
+            <p class="big due">₹{{ total_outstanding }} Due</p>
+        {% elif total_outstanding < 0 %}
+            <p class="big advance">₹{{ total_outstanding|cut:"-" }} Advance</p>
+        {% else %}
+            <p class="big clear">All Settled</p>
+        {% endif %}
+    </div>
+
+</div>
+
+<!-- INSTANT PAYMENT -->
+<div class="card">
+    <h3>Add Instant Payment</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input 
+            type="number" 
+            name="amount" 
+            placeholder="Enter amount" 
+            required
+        >
+        <button name="add_instant">Add Payment</button>
+    </form>
+</div>
+
+<!-- TOP CUSTOMERS -->
+<div class="card">
+    <h3>Top Customers (Due)</h3>
+
+    {% for item in top_customers %}
+    <div class="customer-row">
+        <span>{{ item.customer.name }}</span>
+        <span class="due">₹{{ item.balance }}</span>
+    </div>
+    {% empty %}
+    <p class="empty">No dues</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

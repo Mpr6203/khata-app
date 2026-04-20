@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="header">
+    <h2>{{ customer.name }}</h2>
+    <p>{{ customer.phone }}</p>
+</div>
+
+<!-- BALANCE SUMMARY -->
+<div class="card balance-card">
+    <h3>Current Balance</h3>
+
+    {% if entries %}
+        {% with last=entries|last %}
+            {% if last.balance > 0 %}
+                <p class="due">₹{{ last.balance }} Due</p>
+            {% elif last.balance < 0 %}
+                <p class="advance">₹{{ last.balance|cut:"-" }} Advance</p>
+            {% else %}
+                <p class="clear">Settled</p>
+            {% endif %}
+        {% endwith %}
+    {% else %}
+        <p>No transactions</p>
+    {% endif %}
+</div>
+
+<!-- FORMS -->
+<div class="form-grid">
+
+    <!-- CREDIT -->
+    <div class="card">
+        <h3>Add Credit</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="number" name="amount" placeholder="Amount" required>
+            <input type="text" name="description" placeholder="Description" required>
+            <button name="add_transaction">Add Credit</button>
+        </form>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="card">
+        <h3>Add Payment</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="number" name="amount" placeholder="Amount" required>
+            <input type="text" name="note" placeholder="Note">
+            <button name="add_payment">Add Payment</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- TRANSACTIONS -->
+<div class="card">
+    <h3>Khata History</h3>
+
+    {% for item in entries %}
+    <div class="entry-row">
+
+        <div class="entry-left">
+
+            {% if item.type == 'credit' %}
+                <span class="tag credit">Credit</span>
+                <strong>+ ₹{{ item.entry.amount }}</strong>
+                <p>{{ item.entry.description }}</p>
+
+                <div class="actions">
+                    <a href="{% url 'edit_transaction' item.entry.id %}">✏️</a>
+                    <a href="{% url 'delete_transaction' item.entry.id %}" onclick="return confirm('Delete?')">🗑️</a>
+                </div>
+
+            {% else %}
+                <span class="tag payment">Payment</span>
+                <strong>- ₹{{ item.entry.amount }}</strong>
+                <p>{{ item.entry.note }}</p>
+
+                <div class="actions">
+                    <a href="{% url 'edit_payment' item.entry.id %}">✏️</a>
+                    <a href="{% url 'delete_payment' item.entry.id %}" onclick="return confirm('Delete?')">🗑️</a>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <div class="entry-right">
+            ₹{{ item.balance }}
+        </div>
+
+    </div>
+    {% empty %}
+    <p>No transactions yet</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
