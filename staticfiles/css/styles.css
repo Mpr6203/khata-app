@@ -1,0 +1,270 @@
+/* =====================
+   BASE RESET
+===================== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f5f6fa;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* =====================
+   LAYOUT
+===================== */
+.container {
+    padding: 12px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* =====================
+   NAVBAR
+===================== */
+.navbar {
+    background: #2c3e50;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.navbar a {
+    color: white;
+    font-size: 14px;
+}
+
+/* =====================
+   CARD COMPONENT
+===================== */
+.card {
+    background: white;
+    padding: 16px;
+    margin: 10px 0;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-size: 18px;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 14px;
+    color: gray;
+}
+
+/* =====================
+   FORM ELEMENTS
+===================== */
+input, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+button {
+    background: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+/* =====================
+   CUSTOMER LIST
+===================== */
+.customer-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+    transition: background 0.2s;
+}
+
+.customer-row:hover {
+    background: #f9f9f9;
+}
+
+.customer-left a {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.phone {
+    font-size: 12px;
+    color: gray;
+}
+
+/* =====================
+   DETAIL PAGE
+===================== */
+.header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.balance-card {
+    text-align: center;
+    font-size: 20px;
+}
+
+/* ENTRY ROW */
+.entry-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    gap: 10px;
+}
+
+.entry-left {
+    max-width: 70%;
+}
+
+.entry-right {
+    font-weight: bold;
+}
+
+/* =====================
+   STATUS COLORS (KHATA)
+===================== */
+.due { color: #e74c3c; }
+.advance { color: #2ecc71; }
+.clear { color: gray; }
+
+.credit {
+    background: #fdecea;
+    color: #e74c3c;
+}
+
+.payment {
+    background: #eafaf1;
+    color: #2ecc71;
+}
+
+/* =====================
+   FORMS LAYOUT
+===================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.form-group p {
+    margin-bottom: 10px;
+}
+
+/* =====================
+   ACTION BUTTONS
+===================== */
+.actions a {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+/* =====================
+   DASHBOARD ELEMENTS
+===================== */
+.summary-card {
+    text-align: center;
+    font-size: 20px;
+}
+
+.highlight {
+    background: #ecf7ff;
+}
+
+.big {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+canvas {
+    max-width: 100%;
+    height: 250px;
+}
+
+/* =====================
+   BUTTON GROUPS
+===================== */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.cancel-btn {
+    display: inline-block;
+    padding: 12px;
+    background: #bdc3c7;
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+}
+
+.cancel-btn:hover {
+    background: #95a5a6;
+}
+
+/* =====================
+   EMPTY STATE
+===================== */
+.empty {
+    text-align: center;
+    color: gray;
+}
+
+/* =====================
+   MOBILE RESPONSIVE
+===================== */
+@media (max-width: 600px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .customer-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .entry-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .entry-left {
+        max-width: 100%;
+    }
+
+    .card {
+        margin: 8px;
+    }
+}
