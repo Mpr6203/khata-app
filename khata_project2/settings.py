@@ -80,7 +80,7 @@ import os
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
+        default=os.environ.get('postgresql://mpr:tS6r8HLEIjgZbRxbIKwq8f6LH7OMeENi@dpg-d7iuhp1j2pic73b3hrvg-a/khatadb')
     )
 }
 
