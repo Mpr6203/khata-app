@@ -84,6 +84,13 @@ DATABASES = {
     )
 }
 
+import dj_database_url
+import os
+
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('postgresql://mpr:tS6r8HLEIjgZbRxbIKwq8f6LH7OMeENi@dpg-d7iuhp1j2pic73b3hrvg-a/khatadb'))
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
